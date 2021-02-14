@@ -1,0 +1,3 @@
+WIDTH = 640
+HEIGHT = 640
+TITLE = 'Pac-Man'
