@@ -4,6 +4,8 @@ import os
 
 from pygame.locals import *
 
+vec = pygame.math.Vector2
+
 
 # TODO: Figure out how PyGame rect's work when it comes to collisions
 class Platform(pygame.sprite.Sprite):
@@ -31,8 +33,9 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.image.load(os.path.join('assets', img)).convert()
         self.surf = pygame.Surface((50, 80))  # TODO: Correct sizes
         self.rect = self.surf.get_rect()
-        self.rect.x = xloc
-        self.rect.y = yloc
+        self.vel = vec(0, 0)
+        self.acc = vec(0, 0)
+        self.pos = vec((xloc, yloc))
         self.moving_right = True
 
     def move(self):
@@ -48,11 +51,13 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load("assets/player_character.png")
         self.surf = pygame.Surface((40, 75))  # TODO: Correct sizes
         self.rect = self.surf.get_rect()
-        self.rect.x = xloc
-        self.rect.y = yloc
+        self.pos = vec(xloc, yloc)
+        self.vel = vec(0, 0)
+        self.acc = vec(0, 0)
         self.right_bound = right_bound
 
     def move(self):
+        self.acc = vec(0, 0)
         pressed_keys = pygame.key.get_pressed()
 
         if pressed_keys[K_UP]:

@@ -64,7 +64,7 @@ while True:
         if pygame.sprite.spritecollideany(entity, enemy_boundaries):
             entity.moving_right = not entity.moving_right
 
-    # TODO: Player Character gravity interaction
+    # TODO: Player Character gravity interaction using https://coderslegacy.com/python/pygame-gravity-and-jumping/
 
     pygame.display.update()
     frames_per_sec.tick(FPS)
