@@ -1,8 +1,9 @@
-import time
-
-import pygame, sys
-from pygame.locals import *
 import random
+import time
+import pygame
+import sys
+
+from pygame.locals import *
 
 pygame.init()
 FPS = 60
@@ -86,5 +87,6 @@ while True:
             time.sleep(2)
             pygame.quit()
             sys.exit()
-        pygame.display.update()
-        frames_per_sec.tick(FPS)
+
+    pygame.display.update()
+    frames_per_sec.tick(FPS)
