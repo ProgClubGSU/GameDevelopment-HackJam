@@ -1,0 +1,46 @@
+    def level_generate(self):
+        levelObjects = [[Platform("empty") for j in range(30)] for i in range(30)]
+        pathCurrentDir = os.path.dir(__file__)
+        pathRelDir = "../level.txt"
+        pathAbsDir = os.path.join(pathCurrentDir, pathRelDir)
+        levelFile = open(pathAbsDir, encoding="utf-8")
+
+        levelLineNo = 0
+
+        for levelLine in levelFile.readLines():
+
+            levelLineSplit = list(levelLine)
+
+            for i in range(30):
+                if levelLineSplit[i] == "_":  # passage
+                    levelObjects[i][levelLineNo].name = "empty"
+                elif levelLineSplit[i] == "#":  # wall
+                    levelObjects[i][levelLineNo].name = "wall"
+
+                elif levelLineSplit[i] == "@":  # pacman
+                    levelObjects[i][levelLineNo].name = "empty"
+
+                    # give the starting coordinate
+                    self.player_character.coordinateRel[0] = i
+                    self.player_character.coordinateRel[1] = levelLineNo
+                    self.player_character.coordinateAbs[0] = i * 4
+                    self.player_character.coordinateAbs[1] = levelLineNo * 4
+
+
+                elif levelLineSplit[i] == "&":  # free ghost
+                    levelObjects[i][levelLineNo].name = "empty"
+
+                    # find an inactive ghost and give the starting coordinate
+                    for n in range(4):
+                        if self.movingObjectGhosts[n].isActive == False:
+                            self.movingObjectGhosts[n].isActive = True
+                            self.movingObjectGhosts[n].isCaged = False
+                            self.movingObjectGhosts[n].coordinateRel[0] = i
+                            self.movingObjectGhosts[n].coordinateRel[1] = levelLineNo
+                            self.movingObjectGhosts[n].coordinateAbs[0] = i * 4
+                            self.movingObjectGhosts[n].coordinateAbs[1] = levelLineNo * 4
+                            break  # break current loop (with generator 'n')
+
+                levelLineNo += 1  # indicate which line we are
+
+                levelFile.close()
